@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EEE Portal — SRM IST</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c10;
+  --bg2:#0d1117;
+  --bg3:#111820;
+  --card:#131c26;
+  --card2:#192030;
+  --border:#1e2d3d;
+  --border2:#2a3f55;
+  --accent:#00d4ff;
+  --accent2:#0094c6;
+  --accent3:#00ff94;
+  --accent4:#ff6b35;
+  --text:#e2eaf4;
+  --text2:#8ba4be;
+  --text3:#4a6580;
+  --yellow:#ffd93d;
+  --purple:#a78bfa;
+  --red:#ff4d4d;
+  --glow:0 0 20px rgba(0,212,255,0.15);
+  --glow2:0 0 40px rgba(0,212,255,0.08);
+}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(8,12,16,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:var(--accent);letter-spacing:-0.02em;display:flex;align-items:center;gap:8px;cursor:pointer}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#000;font-family:'Space Mono',monospace}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-link{padding:6px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all 0.2s;border:none;background:none;font-family:'IBM Plex Sans',sans-serif}
+.nav-link:hover,.nav-link.active{background:var(--card);color:var(--text)}
+.nav-ai-btn{padding:6px 16px;border-radius:6px;background:var(--accent);color:#000;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;display:flex;align-items:center;gap:6px;transition:all 0.2s}
+.nav-ai-btn:hover{background:#00bbde}
+
+/* HERO */
+.hero{padding:80px 2rem 60px;max-width:1400px;margin:0 auto;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:24px;letter-spacing:0.05em}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent3);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:20px}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:1.05rem;color:var(--text2);max-width:560px;line-height:1.7;margin-bottom:36px}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:4px}
+.stat-num{font-family:'Space Mono',monospace;font-size:1.6rem;font-weight:700;color:var(--text)}
+.stat-label{font-size:12px;color:var(--text3);letter-spacing:0.05em;text-transform:uppercase}
+.hero-bg{position:absolute;top:0;right:0;width:50%;height:100%;background:radial-gradient(ellipse at 70% 40%,rgba(0,148,198,0.06) 0%,transparent 70%);pointer-events:none}
+.circuit-pattern{position:absolute;top:40px;right:60px;opacity:0.06;width:400px;height:300px}
+
+/* SECTIONS */
+.section{padding:48px 2rem;max-width:1400px;margin:0 auto}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px}
+.section-title{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:-0.02em}
+.section-sub{font-size:13px;color:var(--text3);font-family:'Space Mono',monospace}
+.divider{height:1px;background:linear-gradient(90deg,var(--border),transparent);margin:0 0 48px}
+
+/* TABS */
+.tabs{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:32px;flex-wrap:wrap}
+.tab{flex:1;min-width:120px;padding:8px 16px;border-radius:7px;border:none;background:none;color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all 0.2s;text-align:center}
+.tab.active{background:var(--card2);color:var(--text);box-shadow:0 0 0 1px var(--border2)}
+.tab:hover:not(.active){color:var(--text);background:rgba(255,255,255,0.03)}
+
+/* SEMESTER GRID */
+.sem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.sem-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s,transform 0.2s}
+.sem-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.sem-header{padding:16px 20px;background:var(--card2);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.sem-badge{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent2);background:rgba(0,212,255,0.08);padding:3px 10px;border-radius:4px;border:1px solid rgba(0,212,255,0.15)}
+.sem-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700}
+.sem-body{padding:16px 20px}
+.subject-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all 0.15s}
+.subject-row:last-child{border-bottom:none}
+.subject-row:hover{padding-left:6px}
+.subject-row:hover .sub-name{color:var(--accent)}
+.sub-name{font-size:13px;font-weight:500;line-height:1.3;flex:1;margin-right:12px}
+.sub-code{font-family:'Space Mono',monospace;font-size:10px;color:var(--text3)}
+.sub-tags{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.tag{font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;font-family:'Space Mono',monospace}
+.tag-n{background:rgba(0,212,255,0.1);color:var(--accent);border:1px solid rgba(0,212,255,0.2)}
+.tag-p{background:rgba(255,107,53,0.1);color:var(--accent4);border:1px solid rgba(255,107,53,0.2)}
+.tag-l{background:rgba(0,255,148,0.1);color:var(--accent3);border:1px solid rgba(0,255,148,0.2)}
+
+/* NOTES / PYQ PANEL */
+.content-panel{display:none}
+.content-panel.active{display:block}
+
+/* RESOURCE CARDS */
+.resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.resource-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.resource-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform 0.2s;transform-origin:left}
+.resource-card:hover::before{transform:scaleX(1)}
+.resource-card:hover{border-color:var(--border2);background:var(--card2)}
+.rc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.rc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.rc-icon-n{background:rgba(0,212,255,0.1)}
+.rc-icon-p{background:rgba(255,107,53,0.1)}
+.rc-icon-v{background:rgba(167,139,250,0.1)}
+.rc-title{font-size:13px;font-weight:600;line-height:1.4;flex:1}
+.rc-meta{font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;margin-top:4px}
+.rc-footer{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.rc-size{font-size:11px;color:var(--text3)}
+.dl-btn{font-size:11px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:4px}
+
+/* SUBJECTS EXPLORER */
+.subject-detail{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px;display:none}
+.subject-detail.active{display:block}
+.sd-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.sd-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700}
+.sd-code{font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);margin-top:4px}
+.close-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:16px;flex-shrink:0}
+.close-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+.unit-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:20px}
+.unit-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.unit-num{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent2);margin-bottom:4px}
+.unit-name{font-size:12px;font-weight:500}
+.topics{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.5}
+.sd-actions{display:flex;gap:10px;flex-wrap:wrap}
+.sd-btn{padding:8px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;border:none;display:flex;align-items:center;gap:6px;transition:all 0.2s}
+.sd-btn-p{background:var(--accent);color:#000}
+.sd-btn-p:hover{background:#00bbde}
+.sd-btn-s{background:var(--card2);color:var(--text2);border:1px solid var(--border2)}
+.sd-btn-s:hover{color:var(--text);border-color:var(--accent)}
+
+/* PYQ SECTION */
+.pyq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.pyq-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;cursor:pointer;transition:all 0.2s}
+.pyq-card:hover{border-color:var(--accent4);background:var(--card2)}
+.pyq-year{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--accent4);line-height:1}
+.pyq-sem{font-size:11px;color:var(--text3);margin-top:2px;margin-bottom:12px}
+.pyq-sub{font-size:13px;font-weight:500}
+.pyq-info{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.pyq-tag{font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(255,107,53,0.1);color:var(--accent4);border:1px solid rgba(255,107,53,0.2);font-family:'Space Mono',monospace}
+.pyq-tag-n{background:rgba(0,212,255,0.08);color:var(--accent);border-color:rgba(0,212,255,0.2)}
+
+/* AI TUTOR */
+.ai-panel{position:fixed;bottom:0;right:0;width:380px;height:580px;background:var(--bg2);border:1px solid var(--border);border-bottom:none;border-right:none;border-radius:16px 0 0 0;display:flex;flex-direction:column;z-index:200;transform:translateY(calc(100% - 56px));transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);box-shadow:-4px -4px 32px rgba(0,0,0,0.4)}
+.ai-panel.open{transform:translateY(0)}
+.ai-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;flex-shrink:0}
+.ai-header-left{display:flex;align-items:center;gap:10px}
+.ai-avatar{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-size:15px}
+.ai-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px}
+.ai-status{font-size:11px;color:var(--accent3);display:flex;align-items:center;gap:4px}
+.ai-toggle{background:var(--card);border:1px solid var(--border);border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:12px;transition:all 0.2s}
+.ai-toggle:hover{background:var(--card2)}
+.ai-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:85%;animation:msgIn 0.2s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg-ai{align-self:flex-start}
+.msg-user{align-self:flex-end}
+.msg-bubble{padding:10px 13px;border-radius:10px;font-size:13px;line-height:1.6}
+.msg-ai .msg-bubble{background:var(--card2);border:1px solid var(--border);border-radius:10px 10px 10px 2px;color:var(--text)}
+.msg-user .msg-bubble{background:var(--accent);color:#000;border-radius:10px 10px 2px 10px;font-weight:500}
+.msg-label{font-size:10px;color:var(--text3);margin-bottom:4px;font-family:'Space Mono',monospace}
+.msg-user .msg-label{text-align:right}
+.ai-typing{display:flex;gap:4px;align-items:center;padding:10px 13px;background:var(--card2);border:1px solid var(--border);border-radius:10px;width:fit-content}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:typing 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:0.2s}
+.typing-dot:nth-child(3){animation-delay:0.4s}
+@keyframes typing{0%,100%{opacity:0.3;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+.ai-input-area{padding:12px;border-top:1px solid var(--border);flex-shrink:0}
+.ai-quick-btns{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.quick-btn{font-size:10px;padding:4px 10px;border-radius:4px;background:var(--card2);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all 0.15s;white-space:nowrap}
+.quick-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ai-input-row{display:flex;gap:8px}
+.ai-input{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;font-family:'IBM Plex Sans',sans-serif;resize:none;outline:none;transition:border-color 0.2s;min-height:36px;max-height:80px}
+.ai-input:focus{border-color:var(--accent2)}
+.ai-send{background:var(--accent);border:none;border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#000;font-size:16px;flex-shrink:0;transition:all 0.2s}
+.ai-send:hover{background:#00bbde}
+.ai-send:disabled{opacity:0.5;cursor:not-allowed}
+
+/* ANNOUNCEMENTS */
+.ann-list{display:flex;flex-direction:column;gap:10px}
+.ann{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;display:flex;gap:14px;align-items:flex-start}
+.ann-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.ann-title{font-size:13px;font-weight:600;margin-bottom:3px}
+.ann-meta{font-size:11px;color:var(--text3);font-family:'Space Mono',monospace}
+
+/* TIMETABLE */
+.tt-wrap{overflow-x:auto}
+table.tt{width:100%;border-collapse:collapse;font-size:12px}
+table.tt th{background:var(--card2);padding:10px 14px;text-align:left;font-family:'Space Mono',monospace;font-size:10px;color:var(--text3);border-bottom:1px solid var(--border);letter-spacing:0.05em}
+table.tt td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+table.tt tr:hover td{background:var(--bg2)}
+table.tt .day{font-weight:600;color:var(--text);font-size:11px}
+.period{background:var(--card2);border-radius:4px;padding:4px 8px;margin:2px 0;display:inline-block;font-size:11px;color:var(--text)}
+.period-break{color:var(--text3);font-style:italic}
+.period-lab{background:rgba(0,255,148,0.08);color:var(--accent3);border:1px solid rgba(0,255,148,0.15)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;max-width:640px;width:100%;max-height:80vh;overflow-y:auto;padding:28px}
+.modal-title{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:6px}
+.modal-sub{font-size:12px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:20px}
+.modal-close{float:right;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer;color:var(--text2);font-size:12px;margin-left:12px}
+.modal-close:hover{color:var(--text)}
+.q-list{display:flex;flex-direction:column;gap:12px}
+.q-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.q-marks{font-family:'Space Mono',monospace;font-size:10px;color:var(--yellow);float:right}
+.q-text{font-size:13px;line-height:1.6}
+.q-unit{font-size:10px;color:var(--text3);margin-top:6px;font-family:'Space Mono',monospace}
+
+/* SYLLABUS */
+.syl-unit{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden}
+.syl-unit-header{padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.15s}
+.syl-unit-header:hover{background:var(--card2)}
+.syl-unit-title{font-size:13px;font-weight:600}
+.syl-unit-num{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);margin-right:10px}
+.syl-unit-body{padding:0 18px;max-height:0;overflow:hidden;transition:max-height 0.3s,padding 0.3s}
+.syl-unit-body.open{max-height:400px;padding:0 18px 14px}
+.syl-topic{font-size:12px;color:var(--text2);padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:8px}
+.syl-topic:last-child{border-bottom:none}
+.syl-topic::before{content:'▸';color:var(--accent3);font-size:10px;margin-top:2px;flex-shrink:0}
+
+/* SEARCH */
+.search-bar{display:flex;gap:10px;margin-bottom:24px}
+.search-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 16px;color:var(--text);font-size:14px;font-family:'IBM Plex Sans',sans-serif;outline:none;transition:border-color 0.2s}
+.search-input:focus{border-color:var(--accent2)}
+.search-input::placeholder{color:var(--text3)}
+.filter-select{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text2);font-size:13px;font-family:'IBM Plex Sans',sans-serif;outline:none;cursor:pointer}
+.filter-select:focus{border-color:var(--accent2)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:32px 2rem;margin-top:40px}
+.footer-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap}
+.footer-text{font-size:12px;color:var(--text3);font-family:'Space Mono',monospace}
+
+/* PAGE SECTIONS */
+.page{display:none}.page.active{display:block}
+.breadcrumb{font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:24px;display:flex;gap:6px;align-items:center}
+.breadcrumb span{color:var(--text2)}
+
+/* GLOW ORB */
+.orb{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,148,198,0.04) 0%,transparent 70%);pointer-events:none;z-index:0;transition:all 1s ease}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hero{padding:48px 1rem 32px}
+  .section{padding:32px 1rem}
+  .ai-panel{width:100%;border-radius:16px 16px 0 0;border-left:1px solid var(--border);border-right:1px solid var(--border)}
+}
+</style>
+</head>
+<body>
+
+<div class="orb" id="orb"></div>
+
+<!-- NAV -->
+<nav>
+<div class="nav-inner">
+  <div class="nav-logo" onclick="showPage('home')">
+    <div class="logo-icon">⚡</div>
+    SRM · EEE
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('home',this)">Home</button>
+    <button class="nav-link" onclick="showPage('courses',this)">Courses</button>
+    <button class="nav-link" onclick="showPage('notes',this)">Notes</button>
+    <button class="nav-link" onclick="showPage('pyq',this)">PYQ</button>
+    <button class="nav-link" onclick="showPage('syllabus',this)">Syllabus</button>
+    <button class="nav-link" onclick="showPage('timetable',this)">Timetable</button>
+  </div>
+  <button class="nav-ai-btn" onclick="toggleAI()">⚡ AI Tutor</button>
+</div>
+</nav>
+
+<!-- PAGE: HOME -->
+<div class="page active" id="page-home">
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge"><div class="dot"></div> SRM INSTITUTE OF SCIENCE AND TECHNOLOGY</div>
+  <h1>Electrical & Electronics<br><span>Engineering Portal</span></h1>
+  <p>Your complete academic resource hub — notes, previous year questions, syllabus, timetable, and an AI tutor available 24/7 to guide you through every concept.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">8</span><span class="stat-label">Semesters</span></div>
+    <div class="stat"><span class="stat-num">56+</span><span class="stat-label">Core Subjects</span></div>
+    <div class="stat"><span class="stat-num">200+</span><span class="stat-label">PYQ Papers</span></div>
+    <div class="stat"><span class="stat-num">∞</span><span class="stat-label">AI Help</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">📣 Announcements</div>
+      <div class="section-sub">// latest updates</div>
+    </div>
+  </div>
+  <div class="ann-list">
+    <div class="ann"><div class="ann-dot" style="background:#ff4d4d"></div><div><div class="ann-title">Internal Assessment 1 Schedule Released</div><div class="ann-meta">2025-07-10 · Academic Office</div></div></div>
+    <div class="ann"><div class="ann-dot" style="background:var(--yellow)"></div><div><div class="ann-title">EEE Symposium 2025 — Registration Open (Last date: 20 July)</div><div class="ann-meta">2025-07-08 · EEE Department</div></div></div>
+    <div class="ann"><div class="ann-dot" style="background:var(--accent3)"></div><div><div class="ann-title">New Lab Manual uploaded: Power Electronics Lab (5th Sem)</div><div class="ann-meta">2025-07-05 · Lab In-charge</div></div></div>
+    <div class="ann"><div class="ann-dot" style="background:var(--accent)"></div><div><div class="ann-title">Guest Lecture: HVDC Systems by Dr. K. Raghunathan — 18 July 2025</div><div class="ann-meta">2025-07-03 · Department</div></div></div>
+    <div class="ann"><div class="ann-dot" style="background:var(--purple)"></div><div><div class="ann-title">Semester IV Results Declared — Check SRM Academia Portal</div><div class="ann-meta">2025-06-28 · Exam Cell</div></div></div>
+  </div>
+</div>
+
+<div class="divider" style="max-width:1400px;margin:0 auto"></div>
+
+<div class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🔗 Quick Access</div>
+      <div class="section-sub">// jump to section</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px">
+    <div class="resource-card" onclick="showPage('courses',document.querySelectorAll('.nav-link')[1])">
+      <div style="font-size:28px;margin-bottom:10px">📚</div>
+      <div class="rc-title">Semester-wise Courses</div>
+      <div class="rc-meta">All 8 semesters · 56 subjects</div>
+    </div>
+    <div class="resource-card" onclick="showPage('notes',document.querySelectorAll('.nav-link')[2])">
+      <div style="font-size:28px;margin-bottom:10px">📝</div>
+      <div class="rc-title">Study Notes & Materials</div>
+      <div class="rc-meta">Unit-wise PDFs · Lab Manuals</div>
+    </div>
+    <div class="resource-card" onclick="showPage('pyq',document.querySelectorAll('.nav-link')[3])">
+      <div style="font-size:28px;margin-bottom:10px">📋</div>
+      <div class="rc-title">Previous Year Questions</div>
+      <div class="rc-meta">2019–2024 · All subjects</div>
+    </div>
+    <div class="resource-card" onclick="showPage('syllabus',document.querySelectorAll('.nav-link')[4])">
+      <div style="font-size:28px;margin-bottom:10px">📖</div>
+      <div class="rc-title">Syllabus & Scheme</div>
+      <div class="rc-meta">Regulation 2021 · Unit breakup</div>
+    </div>
+    <div class="resource-card" onclick="showPage('timetable',document.querySelectorAll('.nav-link')[5])">
+      <div style="font-size:28px;margin-bottom:10px">🗓</div>
+      <div class="rc-title">Class Timetable</div>
+      <div class="rc-meta">Current semester schedule</div>
+    </div>
+    <div class="resource-card" onclick="toggleAI();document.getElementById('ai-panel').classList.add('open')">
+      <div style="font-size:28px;margin-bottom:10px">🤖</div>
+      <div class="rc-title">AI Tutor — EEE Assist</div>
+      <div class="rc-meta">Powered by Claude · Always on</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PAGE: COURSES -->
+<div class="page" id="page-courses">
+<div class="section">
+  <div class="breadcrumb">SRM EEE <span>›</span> Courses</div>
+  <div class="section-header">
+    <div>
+      <div class="section-title">Semester-wise Courses</div>
+      <div class="section-sub">// B.E. Electrical & Electronics Engineering — Regulation 2021</div>
+    </div>
+  </div>
+  <div id="subject-detail-area"></div>
+  <div class="sem-grid" id="sem-grid"></div>
+</div>
+</div>
+
+<!-- PAGE: NOTES -->
+<div class="page" id="page-notes">
+<div class="section">
+  <div class="breadcrumb">SRM EEE <span>›</span> Study Materials</div>
+  <div class="section-header">
+    <div>
+      <div class="section-title">Notes & Study Materials</div>
+      <div class="section-sub">// PDFs · Lab Manuals · Reference Books</div>
+    </div>
+  </div>
+  <div class="search-bar">
+    <input class="search-input" type="text" placeholder="Search notes, subject, unit..." id="notes-search" oninput="filterNotes()">
+    <select class="filter-select" id="notes-filter" onchange="filterNotes()">
+      <option value="">All Semesters</option>
+      <option value="1">Semester 1</option><option value="2">Semester 2</option>
+      <option value="3">Semester 3</option><option value="4">Semester 4</option>
+      <option value="5">Semester 5</option><option value="6">Semester 6</option>
+      <option value="7">Semester 7</option><option value="8">Semester 8</option>
+    </select>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchNotesTab('notes',this)">📝 Lecture Notes</button>
+    <button class="tab" onclick="switchNotesTab('lab',this)">🔬 Lab Manuals</button>
+    <button class="tab" onclick="switchNotesTab('ref',this)">📚 Reference Material</button>
+    <button class="tab" onclick="switchNotesTab('formula',this)">📐 Formula Sheets</button>
+  </div>
+  <div id="notes-grid" class="resource-grid"></div>
+</div>
+</div>
+
+<!-- PAGE: PYQ -->
+<div class="page" id="page-pyq">
+<div class="section">
+  <div class="breadcrumb">SRM EEE <span>›</span> Previous Year Questions</div>
+  <div class="section-header">
+    <div>
+      <div class="section-title">Previous Year Questions</div>
+      <div class="section-sub">// End Semester Exams · 2019–2024</div>
+    </div>
+  </div>
+  <div id="pyq-modal-area"></div>
+  <div class="search-bar">
+    <input class="search-input" type="text" placeholder="Search by subject, year..." id="pyq-search" oninput="filterPYQ()">
+    <select class="filter-select" id="pyq-year-filter" onchange="filterPYQ()">
+      <option value="">All Years</option>
+      <option>2024</option><option>2023</option><option>2022</option>
+      <option>2021</option><option>2020</option><option>2019</option>
+    </select>
+  </div>
+  <div class="pyq-grid" id="pyq-grid"></div>
+</div>
+</div>
+
+<!-- PAGE: SYLLABUS -->
+<div class="page" id="page-syllabus">
+<div class="section">
+  <div class="breadcrumb">SRM EEE <span>›</span> Syllabus</div>
+  <div class="section-header">
+    <div>
+      <div class="section-title">Syllabus — Regulation 2021</div>
+      <div class="section-sub">// Unit-wise topics for all core subjects</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchSylTab('3',this)">Semester 3</button>
+    <button class="tab" onclick="switchSylTab('4',this)">Semester 4</button>
+    <button class="tab" onclick="switchSylTab('5',this)">Semester 5</button>
+    <button class="tab" onclick="switchSylTab('6',this)">Semester 6</button>
+  </div>
+  <div id="syllabus-content"></div>
+</div>
+</div>
+
+<!-- PAGE: TIMETABLE -->
+<div class="page" id="page-timetable">
+<div class="section">
+  <div class="breadcrumb">SRM EEE <span>›</span> Timetable</div>
+  <div class="section-header">
+    <div>
+      <div class="section-title">Class Timetable</div>
+      <div class="section-sub">// Odd Semester 2025–26 · Section A</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTTTab('5',this)">5th Semester</button>
+    <button class="tab" onclick="switchTTTab('3',this)">3rd Semester</button>
+    <button class="tab" onclick="switchTTTab('7',this)">7th Semester</button>
+  </div>
+  <div class="tt-wrap"><table class="tt" id="tt-table"></table></div>
+</div>
+</div>
+
+<!-- AI TUTOR PANEL -->
+<div class="ai-panel" id="ai-panel">
+  <div class="ai-header" onclick="toggleAIHeader()">
+    <div class="ai-header-left">
+      <div class="ai-avatar">⚡</div>
+      <div>
+        <div class="ai-name">EEE Tutor AI</div>
+        <div class="ai-status"><div class="dot"></div> Online · SRM Specialist</div>
+      </div>
+    </div>
+    <div class="ai-toggle" id="ai-toggle-icon">▲</div>
+  </div>
+  <div class="ai-messages" id="ai-messages">
+    <div class="msg msg-ai">
+      <div class="msg-label">EEE Tutor</div>
+      <div class="msg-bubble">👋 Hi! I'm your EEE Tutor for SRM IST. I can help you with circuit analysis, machines, power systems, electronics, signal processing, and all EEE subjects. Ask me anything! 🔌⚡</div>
+    </div>
+  </div>
+  <div class="ai-input-area">
+    <div class="ai-quick-btns">
+      <button class="quick-btn" onclick="sendQuick('Explain KVL and KCL with examples')">KVL & KCL</button>
+      <button class="quick-btn" onclick="sendQuick('What are the types of DC motors?')">DC Motors</button>
+      <button class="quick-btn" onclick="sendQuick('Explain MOSFET operation')">MOSFET</button>
+      <button class="quick-btn" onclick="sendQuick('What is power factor correction?')">Power Factor</button>
+      <button class="quick-btn" onclick="sendQuick('Explain Laplace transforms in circuits')">Laplace</button>
+    </div>
+    <div class="ai-input-row">
+      <textarea class="ai-input" id="ai-input" placeholder="Ask any EEE concept..." rows="1" onkeydown="aiKeydown(event)"></textarea>
+      <button class="ai-send" id="ai-send" onclick="sendAIMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- PYQ MODAL -->
+<div class="modal-overlay" id="pyq-modal" onclick="closePYQModal(event)">
+  <div class="modal" id="pyq-modal-content"></div>
+</div>
+
+<footer>
+<div class="footer-inner">
+  <div class="footer-text">© 2025 EEE Portal · SRM IST · Kattankulathur</div>
+  <div class="footer-text">Regulation 2021 · B.E. Electrical & Electronics Engineering</div>
+</div>
+</footer>
+
+<script>
+// ─── DATA ───
+const SEMESTERS = [
+  {sem:1,subjects:[
+    {code:'21ENG101',name:'Technical English',tags:['N']},
+    {code:'21MAT101',name:'Engineering Mathematics I',tags:['N','P']},
+    {code:'21PHY101',name:'Engineering Physics',tags:['N','P']},
+    {code:'21CHY101',name:'Engineering Chemistry',tags:['N']},
+    {code:'21GEE101',name:'Basics of Electrical & Electronics Engg.',tags:['N']},
+    {code:'21MEE101',name:'Engineering Graphics',tags:['N']},
+    {code:'21PHY181',name:'Physics Lab',tags:['L']},
+    {code:'21CHY181',name:'Chemistry Lab',tags:['L']},
+  ]},
+  {sem:2,subjects:[
+    {code:'21ENG201',name:'Professional Communication',tags:['N']},
+    {code:'21MAT201',name:'Engineering Mathematics II',tags:['N','P']},
+    {code:'21CSE201',name:'Programming in C',tags:['N','P']},
+    {code:'21GEE201',name:'Elements of Civil & Mechanical Engg.',tags:['N']},
+    {code:'21EEE201',name:'Circuit Theory',tags:['N','P']},
+    {code:'21CSE281',name:'C Programming Lab',tags:['L']},
+    {code:'21EEE281',name:'Circuit Theory Lab',tags:['L']},
+  ]},
+  {sem:3,subjects:[
+    {code:'21MAT301',name:'Engineering Mathematics III (Transforms & Numerical Methods)',tags:['N','P']},
+    {code:'21EEE301',name:'Electromagnetic Theory',tags:['N','P']},
+    {code:'21EEE302',name:'Electronic Devices & Circuits',tags:['N','P']},
+    {code:'21EEE303',name:'Electrical Machines I',tags:['N','P']},
+    {code:'21EEE304',name:'Measurements & Instrumentation',tags:['N','P']},
+    {code:'21EEE381',name:'Electronic Devices Lab',tags:['L']},
+    {code:'21EEE382',name:'Electrical Machines Lab I',tags:['L']},
+  ]},
+  {sem:4,subjects:[
+    {code:'21MAT401',name:'Probability & Statistics',tags:['N','P']},
+    {code:'21EEE401',name:'Linear Integrated Circuits',tags:['N','P']},
+    {code:'21EEE402',name:'Electrical Machines II',tags:['N','P']},
+    {code:'21EEE403',name:'Signals & Systems',tags:['N','P']},
+    {code:'21EEE404',name:'Control Systems',tags:['N','P']},
+    {code:'21EEE481',name:'Linear IC Applications Lab',tags:['L']},
+    {code:'21EEE482',name:'Electrical Machines Lab II',tags:['L']},
+    {code:'21EEE483',name:'Control & Instrumentation Lab',tags:['L']},
+  ]},
+  {sem:5,subjects:[
+    {code:'21EEE501',name:'Power Systems I',tags:['N','P']},
+    {code:'21EEE502',name:'Microprocessors & Microcontrollers',tags:['N','P']},
+    {code:'21EEE503',name:'Power Electronics',tags:['N','P']},
+    {code:'21EEE504',name:'Digital Signal Processing',tags:['N','P']},
+    {code:'21EEE505',name:'Open Elective I',tags:['N']},
+    {code:'21EEE581',name:'Power Electronics Lab',tags:['L']},
+    {code:'21EEE582',name:'Microprocessors Lab',tags:['L']},
+  ]},
+  {sem:6,subjects:[
+    {code:'21EEE601',name:'Power Systems II',tags:['N','P']},
+    {code:'21EEE602',name:'Solid State Drives',tags:['N','P']},
+    {code:'21EEE603',name:'Protection & Switchgear',tags:['N','P']},
+    {code:'21EEE604',name:'Embedded Systems',tags:['N','P']},
+    {code:'21EEE605',name:'Professional Elective I',tags:['N']},
+    {code:'21EEE681',name:'Power Systems Simulation Lab',tags:['L']},
+    {code:'21EEE682',name:'Embedded Systems Lab',tags:['L']},
+  ]},
+  {sem:7,subjects:[
+    {code:'21EEE701',name:'High Voltage Engineering',tags:['N','P']},
+    {code:'21EEE702',name:'Flexible AC Transmission Systems',tags:['N']},
+    {code:'21EEE703',name:'Professional Elective II',tags:['N']},
+    {code:'21EEE704',name:'Professional Elective III',tags:['N']},
+    {code:'21EEE705',name:'Open Elective II',tags:['N']},
+    {code:'21EEE781',name:'Project Work Phase I',tags:['L']},
+    {code:'21EEE782',name:'Internship',tags:['L']},
+  ]},
+  {sem:8,subjects:[
+    {code:'21EEE801',name:'Smart Grid Technology',tags:['N']},
+    {code:'21EEE802',name:'Professional Elective IV',tags:['N']},
+    {code:'21EEE803',name:'Open Elective III',tags:['N']},
+    {code:'21EEE881',name:'Project Work Phase II',tags:['L']},
+  ]},
+];
+
+const NOTES_DATA = [
+  {id:1,title:'Circuit Theory — Unit 1: DC Circuits',sub:'Circuit Theory',sem:2,type:'notes',pages:42,year:2024},
+  {id:2,title:'Circuit Theory — Unit 2: AC Circuits & Phasors',sub:'Circuit Theory',sem:2,type:'notes',pages:38,year:2024},
+  {id:3,title:'Circuit Theory — Unit 3: Network Theorems',sub:'Circuit Theory',sem:2,type:'notes',pages:55,year:2024},
+  {id:4,title:'Electrical Machines I — Unit 1: Transformers',sub:'Electrical Machines I',sem:3,type:'notes',pages:60,year:2024},
+  {id:5,title:'Electrical Machines I — Unit 2: DC Machines',sub:'Electrical Machines I',sem:3,type:'notes',pages:48,year:2024},
+  {id:6,title:'Electronic Devices & Circuits — Unit 1: PN Junction',sub:'Electronic Devices & Circuits',sem:3,type:'notes',pages:44,year:2024},
+  {id:7,title:'Electronic Devices & Circuits — Unit 2: Transistors',sub:'Electronic Devices & Circuits',sem:3,type:'notes',pages:52,year:2024},
+  {id:8,title:'Signals & Systems — Complete Notes',sub:'Signals & Systems',sem:4,type:'notes',pages:90,year:2024},
+  {id:9,title:'Control Systems — All 5 Units',sub:'Control Systems',sem:4,type:'notes',pages:110,year:2024},
+  {id:10,title:'Power Electronics — Unit 1: Power Semiconductor Devices',sub:'Power Electronics',sem:5,type:'notes',pages:50,year:2024},
+  {id:11,title:'Power Electronics — Unit 2: Rectifiers & Converters',sub:'Power Electronics',sem:5,type:'notes',pages:62,year:2024},
+  {id:12,title:'Power Systems I — Transmission Lines',sub:'Power Systems I',sem:5,type:'notes',pages:58,year:2024},
+  {id:13,title:'Microprocessors — 8085 Architecture',sub:'Microprocessors & Microcontrollers',sem:5,type:'notes',pages:40,year:2024},
+  {id:14,title:'DSP — Z-Transform & DFT',sub:'Digital Signal Processing',sem:5,type:'notes',pages:68,year:2024},
+  {id:15,title:'EMT — Electrostatics & Magnetostatics',sub:'Electromagnetic Theory',sem:3,type:'notes',pages:72,year:2024},
+  // Lab manuals
+  {id:16,title:'Power Electronics Lab Manual',sub:'Power Electronics',sem:5,type:'lab',pages:35,year:2025},
+  {id:17,title:'Electrical Machines Lab I Manual',sub:'Electrical Machines I',sem:3,type:'lab',pages:28,year:2024},
+  {id:18,title:'Electronic Devices Lab Manual',sub:'Electronic Devices & Circuits',sem:3,type:'lab',pages:32,year:2024},
+  {id:19,title:'Microprocessors Lab Manual',sub:'Microprocessors & Microcontrollers',sem:5,type:'lab',pages:40,year:2024},
+  {id:20,title:'Control & Instrumentation Lab Manual',sub:'Control Systems',sem:4,type:'lab',pages:30,year:2024},
+  // Reference
+  {id:21,title:'Hayt & Kemmerly — Engineering Circuit Analysis (Reference)',sub:'Circuit Theory',sem:2,type:'ref',pages:820,year:2023},
+  {id:22,title:'Stephen Chapman — Electric Machinery Fundamentals (Reference)',sub:'Electrical Machines I',sem:3,type:'ref',pages:750,year:2023},
+  {id:23,title:'Rashid — Power Electronics Handbook (Reference)',sub:'Power Electronics',sem:5,type:'ref',pages:990,year:2023},
+  {id:24,title:'Nagrath & Kothari — Modern Power Systems (Reference)',sub:'Power Systems I',sem:5,type:'ref',pages:680,year:2023},
+  // Formula sheets
+  {id:25,title:'Circuit Theory — Formula Sheet',sub:'Circuit Theory',sem:2,type:'formula',pages:4,year:2024},
+  {id:26,title:'Signals & Systems — Formula Quick Reference',sub:'Signals & Systems',sem:4,type:'formula',pages:6,year:2024},
+  {id:27,title:'Power Electronics — Key Formulas',sub:'Power Electronics',sem:5,type:'formula',pages:5,year:2024},
+  {id:28,title:'Control Systems — Transfer Function & Stability Formulas',sub:'Control Systems',sem:4,type:'formula',pages:7,year:2024},
+];
+
+const PYQ_DATA = [
+  {id:1,year:2024,sem:'Nov/Dec',sub:'Power Electronics',code:'21EEE503',semester:5,type:'End Semester',questions:[
+    {q:'Explain the operation of a single-phase fully controlled rectifier with an RL load. Derive the expression for average output voltage.',marks:16,unit:'Unit II'},
+    {q:'With a neat circuit diagram and waveforms, explain the working of a 3-phase bridge inverter.',marks:16,unit:'Unit III'},
+    {q:'Describe the gate triggering circuit for SCR with diagram. Explain R-C triggering in detail.',marks:8,unit:'Unit I'},
+    {q:'Explain boost converter operation. Derive the expression for output voltage and inductor current ripple.',marks:16,unit:'Unit IV'},
+    {q:'Write short notes on: (a) Chopper classification (b) IGBT characteristics',marks:8,unit:'Unit I'},
+    {q:'Explain Phase-angle control method for AC voltage controller. Derive voltage and current expressions.',marks:16,unit:'Unit V'},
+  ]},
+  {id:2,year:2024,sem:'Nov/Dec',sub:'Control Systems',code:'21EEE404',semester:4,type:'End Semester',questions:[
+    {q:'Derive the transfer function of a field-controlled DC servo motor.',marks:16,unit:'Unit I'},
+    {q:'Construct the root locus for G(s)H(s) = K/[s(s+2)(s+4)]. Find the value of K for marginal stability.',marks:16,unit:'Unit III'},
+    {q:'Explain the concept of Bode plot. Draw the Bode plot for G(s)=10/[s(1+0.4s)(1+0.1s)] and determine gain margin and phase margin.',marks:16,unit:'Unit IV'},
+    {q:'State and explain Mason\'s gain formula with an example signal flow graph.',marks:16,unit:'Unit I'},
+    {q:'Explain PID controller. How does each term affect system response?',marks:8,unit:'Unit V'},
+  ]},
+  {id:3,year:2023,sem:'Nov/Dec',sub:'Electrical Machines II',code:'21EEE402',semester:4,type:'End Semester',questions:[
+    {q:'Derive the expression for the torque of a 3-phase induction motor. Draw and explain the torque-slip characteristics.',marks:16,unit:'Unit I'},
+    {q:'Explain the principle of operation of a synchronous generator. Derive the EMF equation.',marks:16,unit:'Unit II'},
+    {q:'With circuit diagram, explain the speed control of induction motor by varying rotor resistance.',marks:16,unit:'Unit III'},
+    {q:'Explain V-curves and inverted V-curves of synchronous motors.',marks:8,unit:'Unit II'},
+    {q:'Write short notes on: (a) Hunting in synchronous motors (b) Damper windings',marks:8,unit:'Unit II'},
+  ]},
+  {id:4,year:2023,sem:'Nov/Dec',sub:'Signals & Systems',code:'21EEE403',semester:4,type:'End Semester',questions:[
+    {q:'Determine the Fourier series coefficients of a full-wave rectified sine wave. Plot the amplitude spectrum.',marks:16,unit:'Unit II'},
+    {q:'State and prove the convolution property of Laplace transform. Find the inverse Laplace of (s+3)/[(s+1)(s+2)].',marks:16,unit:'Unit III'},
+    {q:'Explain causality and BIBO stability for LTI systems with examples.',marks:8,unit:'Unit I'},
+    {q:'Determine the Z-transform and ROC of x[n]=(1/2)^n u[n] + (1/3)^n u[-n-1].',marks:16,unit:'Unit V'},
+    {q:'Derive the Nyquist sampling theorem. What are the effects of aliasing?',marks:8,unit:'Unit IV'},
+  ]},
+  {id:5,year:2022,sem:'Nov/Dec',sub:'Power Systems I',code:'21EEE501',semester:5,type:'End Semester',questions:[
+    {q:'Derive the performance equations of a medium transmission line using nominal-π method.',marks:16,unit:'Unit II'},
+    {q:'Explain the per unit system. Why is it preferred in power system calculations?',marks:8,unit:'Unit I'},
+    {q:'Derive the expression for capacitance of a 3-phase line with equilateral spacing.',marks:16,unit:'Unit III'},
+    {q:'Explain the overhead line insulators: pin type, suspension type, and strain type with neat diagrams.',marks:8,unit:'Unit IV'},
+    {q:'What is the critical disruptive voltage? Derive the Peek\'s formula for visual critical voltage.',marks:16,unit:'Unit V'},
+  ]},
+  {id:6,year:2022,sem:'Nov/Dec',sub:'Electronic Devices & Circuits',code:'21EEE302',semester:3,type:'End Semester',questions:[
+    {q:'Explain the formation of PN junction. Derive the ideal diode equation and explain V-I characteristics.',marks:16,unit:'Unit I'},
+    {q:'Derive the expression for stability factor S for a transistor amplifier with emitter bias.',marks:16,unit:'Unit II'},
+    {q:'Analyze common emitter amplifier using h-parameter model. Derive expressions for Ai, Av, Ri, Ro.',marks:16,unit:'Unit III'},
+    {q:'Explain tunnel diode and its applications. Draw its V-I characteristics.',marks:8,unit:'Unit I'},
+    {q:'Write short notes on: (a) JFET characteristics (b) MOSFET types and operation',marks:8,unit:'Unit IV'},
+  ]},
+  {id:7,year:2024,sem:'Apr/May',sub:'Circuit Theory',code:'21EEE201',semester:2,type:'End Semester',questions:[
+    {q:'State and prove Thevenin\'s theorem. Find Thevenin equivalent of a given network and find current through a load.',marks:16,unit:'Unit II'},
+    {q:'Explain series and parallel resonance. Derive expressions for resonant frequency, Q-factor and bandwidth.',marks:16,unit:'Unit III'},
+    {q:'Apply mesh analysis to find the mesh currents in a network with dependent sources.',marks:16,unit:'Unit I'},
+    {q:'Find the transient response of a series RL circuit with DC excitation using Laplace transforms.',marks:8,unit:'Unit IV'},
+    {q:'Explain two-port network parameters: Z, Y, h, and ABCD parameters.',marks:16,unit:'Unit V'},
+  ]},
+  {id:8,year:2021,sem:'Nov/Dec',sub:'Electromagnetic Theory',code:'21EEE301',semester:3,type:'End Semester',questions:[
+    {q:'State and prove Gauss\'s law in integral form. Apply it to find E for an infinite line charge.',marks:16,unit:'Unit I'},
+    {q:'Derive Maxwell\'s equations in differential and integral form from Faraday\'s law and Ampere\'s law.',marks:16,unit:'Unit IV'},
+    {q:'Explain Biot-Savart law. Find H due to a finite length current-carrying conductor.',marks:16,unit:'Unit II'},
+    {q:'Explain the propagation of uniform plane wave in free space and a lossy dielectric medium.',marks:16,unit:'Unit V'},
+    {q:'Derive the boundary conditions for electric field at the interface of two dielectrics.',marks:8,unit:'Unit I'},
+  ]},
+];
+
+const SYLLABUS = {
+  '3':[
+    {sub:'Engineering Mathematics III',code:'21MAT301',units:[
+      {n:'Unit I',title:'Laplace Transforms',topics:'Laplace transform · First and second shifting theorems · Inverse Laplace transform · Convolution theorem · Solution of ODEs using Laplace transforms'},
+      {n:'Unit II',title:'Fourier Series',topics:'Dirichlet\'s conditions · Full range and half range Fourier series · Harmonic analysis · Complex form of Fourier series'},
+      {n:'Unit III',title:'Fourier Transforms',topics:'Fourier integral theorem · Fourier sine and cosine transforms · Parseval\'s identity · Applications to boundary value problems'},
+      {n:'Unit IV',title:'Z-Transform',topics:'Z-transform · Standard sequences · Inverse Z-transform by partial fractions and residues · Application to difference equations'},
+      {n:'Unit V',title:'Numerical Methods',topics:'Solutions of non-linear equations (Newton-Raphson) · Numerical differentiation · Integration (Trapezoidal, Simpson\'s) · Euler and Runge-Kutta methods'},
+    ]},
+    {sub:'Electromagnetic Theory',code:'21EEE301',units:[
+      {n:'Unit I',title:'Electrostatics',topics:'Coulomb\'s law · Electric field intensity · Gauss\'s law · Electric potential · Energy density · Laplace and Poisson equations'},
+      {n:'Unit II',title:'Magnetostatics',topics:'Biot-Savart law · Ampere\'s circuit law · Magnetic flux density · Vector magnetic potential · Boundary conditions'},
+      {n:'Unit III',title:'Electric and Magnetic Fields in Materials',topics:'Dielectrics · Polarization · Boundary conditions for dielectrics · Magnetic materials · Hysteresis'},
+      {n:'Unit IV',title:'Time Varying Fields & Maxwell\'s Equations',topics:'Faraday\'s law · Displacement current · Maxwell\'s equations in differential and integral form · Boundary conditions'},
+      {n:'Unit V',title:'Electromagnetic Waves',topics:'Wave propagation in free space · Lossy dielectric · Skin effect · Poynting theorem · Reflection and refraction of plane waves'},
+    ]},
+    {sub:'Electronic Devices & Circuits',code:'21EEE302',units:[
+      {n:'Unit I',title:'PN Junction Diode',topics:'Formation of PN junction · Forward and reverse bias · Ideal diode equation · Zener, tunnel, varactor diodes · LED, photodiode'},
+      {n:'Unit II',title:'Transistor Biasing',topics:'BJT operation · CB, CE, CC configurations · DC bias circuits · Stability factors · Self-bias circuit design'},
+      {n:'Unit III',title:'Small Signal Analysis',topics:'h-parameter model · CE, CB, CC amplifier analysis · High frequency model · Miller effect · Gain-bandwidth product'},
+      {n:'Unit IV',title:'FET and MOSFET',topics:'JFET characteristics · MOSFET types (enhancement, depletion) · FET as amplifier · CMOS basics'},
+      {n:'Unit V',title:'Power Amplifiers & Oscillators',topics:'Class A, B, AB, C amplifiers · Push-pull amplifier · Feedback amplifiers · Barkhausen criterion · LC and RC oscillators'},
+    ]},
+    {sub:'Electrical Machines I',code:'21EEE303',units:[
+      {n:'Unit I',title:'Transformers',topics:'Principle of operation · EMF equation · OC and SC tests · Regulation · Efficiency · All-day efficiency · Auto transformer'},
+      {n:'Unit II',title:'DC Generators',topics:'Construction · Types · EMF equation · Armature reaction · Commutation · Characteristics of DC generators'},
+      {n:'Unit III',title:'DC Motors',topics:'Principle of operation · Back EMF · Torque equation · Characteristics · Starting · Speed control methods'},
+      {n:'Unit IV',title:'Three-Phase Induction Motor',topics:'Construction · RMF production · Slip · Torque-slip characteristics · Equivalent circuit · No load and blocked rotor tests'},
+      {n:'Unit V',title:'Single-Phase Induction & Special Machines',topics:'Double revolving field theory · Types of single-phase IM · Universal motor · Stepper motor · Servo motor'},
+    ]},
+  ],
+  '4':[
+    {sub:'Linear Integrated Circuits',code:'21EEE401',units:[
+      {n:'Unit I',title:'IC Fabrication & Op-Amp Basics',topics:'IC types · Monolithic fabrication · Op-Amp parameters · Open-loop and closed-loop configurations · CMRR · PSRR'},
+      {n:'Unit II',title:'Op-Amp Applications',topics:'Inverting and non-inverting amplifiers · Summing · Difference · Integrator · Differentiator · Instrumentation amplifier'},
+      {n:'Unit III',title:'Oscillators & Waveform Generators',topics:'Phase shift oscillator · Wien bridge · Square and triangular wave generators · VCO · 555 timer circuits'},
+      {n:'Unit IV',title:'Active Filters & Regulators',topics:'First and second order filters (LPF, HPF, BPF, BRF) · Butterworth · Linear regulators (723) · Switching regulators'},
+      {n:'Unit V',title:'Data Converters & PLL',topics:'DAC types (R-2R, weighted) · ADC types (SAR, flash) · PLL operation · Frequency synthesis · Applications'},
+    ]},
+    {sub:'Signals & Systems',code:'21EEE403',units:[
+      {n:'Unit I',title:'Classification of Signals & Systems',topics:'Continuous and discrete signals · Periodicity · Energy and power signals · Systems: linearity, causality, stability, time-invariance'},
+      {n:'Unit II',title:'Fourier Series & Fourier Transform',topics:'Trigonometric and exponential Fourier series · Fourier transform · Properties · Energy spectral density · Parseval\'s theorem'},
+      {n:'Unit III',title:'Laplace Transform',topics:'Bilateral and unilateral Laplace transform · ROC · Inverse Laplace · Properties · System analysis using Laplace transform'},
+      {n:'Unit IV',title:'Sampling & Reconstruction',topics:'Sampling theorem · Aliasing · Reconstruction · Quantization · PAM, PWM, PPM · Nyquist rate'},
+      {n:'Unit V',title:'Z-Transform & Discrete Systems',topics:'Z-transform and ROC · Inverse Z-transform · Discrete Fourier Transform · DFT properties · Radix-2 FFT'},
+    ]},
+    {sub:'Control Systems',code:'21EEE404',units:[
+      {n:'Unit I',title:'System Modeling',topics:'Transfer function · Block diagram reduction · Signal flow graphs · Mason\'s formula · DC and AC servo motors · Synchros'},
+      {n:'Unit II',title:'Time Domain Analysis',topics:'Standard test signals · First and second order systems · Transient response parameters · P, PI, PD, PID controllers · Ziegler-Nichols tuning'},
+      {n:'Unit III',title:'Root Locus',topics:'Construction rules · Open-loop and closed-loop relationship · Stability analysis · Breakaway points · Angle of departure'},
+      {n:'Unit IV',title:'Frequency Domain Analysis',topics:'Bode plots · Gain and phase margins · Polar plots · Nyquist stability criterion · Closed-loop frequency response'},
+      {n:'Unit V',title:'Compensators & State Space',topics:'Lag, lead, lag-lead compensators · Design using Bode plot · State equations · State transition matrix · Controllability · Observability'},
+    ]},
+  ],
+  '5':[
+    {sub:'Power Systems I',code:'21EEE501',units:[
+      {n:'Unit I',title:'Introduction to Power Systems',topics:'Structure of power system · Per unit system · Single-line diagram · Impedance and reactance diagrams · Components'},
+      {n:'Unit II',title:'Transmission Line Parameters',topics:'Resistance · Inductance · Capacitance · GMD · Transposition · Bundled conductors · Skin effect'},
+      {n:'Unit III',title:'Performance of Transmission Lines',topics:'Short, medium, long line models · Nominal-π and T equivalents · ABCD parameters · Circle diagrams · Voltage regulation · Efficiency'},
+      {n:'Unit IV',title:'Overhead Line Insulators & Cables',topics:'Pin, suspension, strain type insulators · String efficiency · Grading · Underground cables · Insulation resistance · Charging current'},
+      {n:'Unit V',title:'Corona & HVDC',topics:'Corona discharge · Peek\'s formula · Critical voltage · Power loss · Factors affecting corona · HVDC systems · Advantages'},
+    ]},
+    {sub:'Power Electronics',code:'21EEE503',units:[
+      {n:'Unit I',title:'Power Semiconductor Devices',topics:'SCR structure and characteristics · Gate triggering · Commutation · IGBT · MOSFET · GTO · Selection criteria'},
+      {n:'Unit II',title:'Controlled Rectifiers',topics:'Single and three-phase fully/half controlled rectifiers · Continuous and discontinuous modes · Freewheeling diode · Dual converters'},
+      {n:'Unit III',title:'Inverters',topics:'Single-phase and three-phase VSI · PWM techniques (SPWM, SVPWM) · Current source inverter · Multi-level inverters'},
+      {n:'Unit IV',title:'DC-DC Converters',topics:'Buck, boost, buck-boost converters · Cuk converter · Flyback converter · Resonant converters · Transfer function · Closed-loop control'},
+      {n:'Unit V',title:'AC Voltage Controllers',topics:'Single-phase and three-phase AC controllers · Phase angle and integral cycle control · Cycloconverter · Matrix converter'},
+    ]},
+    {sub:'Digital Signal Processing',code:'21EEE504',units:[
+      {n:'Unit I',title:'Discrete Signals & Systems',topics:'Discrete time signals and systems · Convolution · Correlation · Z-transform review · Discrete time Fourier Transform'},
+      {n:'Unit II',title:'DFT & FFT',topics:'DFT computation · IDFT · Properties · Radix-2 DIT and DIF FFT · Inverse FFT · Overlap-add and overlap-save methods'},
+      {n:'Unit III',title:'IIR Filter Design',topics:'Butterworth and Chebyshev analog filters · Impulse invariance · Bilinear transformation · Digital IIR filter realization'},
+      {n:'Unit IV',title:'FIR Filter Design',topics:'Windowing technique · Rectangular, Hanning, Hamming, Blackman windows · Frequency sampling method · Optimal filter design'},
+      {n:'Unit V',title:'DSP Applications',topics:'Speech processing · Image processing basics · Adaptive filters · LMS algorithm · Multi-rate signal processing · DSP processor architecture'},
+    ]},
+  ],
+  '6':[
+    {sub:'Power Systems II',code:'21EEE601',units:[
+      {n:'Unit I',title:'Load Flow Analysis',topics:'Bus classification · Formation of Y-bus · Gauss-Seidel method · Newton-Raphson method · Fast decoupled load flow · Comparison'},
+      {n:'Unit II',title:'Symmetrical Fault Analysis',topics:'Short circuit currents · Per unit reactance · Symmetrical 3-phase fault · Z-bus method · Current limiting reactors'},
+      {n:'Unit III',title:'Unsymmetrical Fault Analysis',topics:'Symmetrical components · Sequence networks · SLG, LL, DLG faults · Sequence currents and voltages'},
+      {n:'Unit IV',title:'Power System Stability',topics:'Steady-state and transient stability · Swing equation · Equal area criterion · Multi-machine stability · Improvement methods'},
+      {n:'Unit V',title:'Economic Operation',topics:'Economic dispatch · Lagrange multiplier method · Loss formula · Automatic generation control · Unit commitment'},
+    ]},
+    {sub:'Protection & Switchgear',code:'21EEE603',units:[
+      {n:'Unit I',title:'Introduction to Protection',topics:'Zones of protection · Primary and backup protection · Relay types and characteristics · CT and PT · Protection principles'},
+      {n:'Unit II',title:'Overcurrent & Distance Protection',topics:'Time-overcurrent relays · IDMT relays · Directional relays · Distance relay characteristics · Mho relay · Impedance relay'},
+      {n:'Unit III',title:'Differential & Pilot Protection',topics:'Differential protection of generators · Transformers · Buses · Merz-Price scheme · Pilot wire protection'},
+      {n:'Unit IV',title:'Circuit Breakers',topics:'Arc interruption theory · Air blast CB · Oil CB · SF6 CB · Vacuum CB · RRRV · Selection criteria'},
+      {n:'Unit V',title:'Protection of Power Apparatus',topics:'Generator protection · Transformer protection · Feeder protection · Busbar protection · Motor protection · Distance protection of feeders'},
+    ]},
+  ],
+};
+
+const TIMETABLE = {
+  '5':{
+    headers:['Day','8:00–8:50','8:50–9:40','9:40–10:30','10:30–11:20','11:20–12:10','12:10–1:00','1:00–1:50','1:50–2:40','2:40–3:30'],
+    rows:[
+      ['MON','PS-I (21EEE501)','PS-I (21EEE501)','MP (21EEE502)','PE (21EEE503)','Break','DSP (21EEE504)','DSP (21EEE504)','PE Lab →','PE Lab →'],
+      ['TUE','PE (21EEE503)','DSP (21EEE504)','PS-I (21EEE501)','MP (21EEE502)','Break','OE-I','PE Lab →','PE Lab →','—'],
+      ['WED','DSP (21EEE504)','PE (21EEE503)','MP (21EEE502)','PS-I (21EEE501)','Break','MP Lab →','MP Lab →','MP Lab →','—'],
+      ['THU','OE-I','PS-I (21EEE501)','DSP (21EEE504)','PE (21EEE503)','Break','PE (21EEE503)','MP (21EEE502)','—','—'],
+      ['FRI','MP (21EEE502)','OE-I','PE (21EEE503)','DSP (21EEE504)','Break','PS-I (21EEE501)','Tutorial','Tutorial','—'],
+    ]
+  },
+  '3':{
+    headers:['Day','8:00–8:50','8:50–9:40','9:40–10:30','10:30–11:20','11:20–12:10','12:10–1:00','1:00–1:50','1:50–2:40','2:40–3:30'],
+    rows:[
+      ['MON','M-III (21MAT301)','EMT (21EEE301)','EDC (21EEE302)','Machines-I (21EEE303)','Break','M&I (21EEE304)','EDC Lab →','EDC Lab →','—'],
+      ['TUE','EDC (21EEE302)','M-III (21MAT301)','Machines-I (21EEE303)','EMT (21EEE301)','Break','Machines Lab →','Machines Lab →','Machines Lab →','—'],
+      ['WED','Machines-I (21EEE303)','EDC (21EEE302)','M-III (21MAT301)','M&I (21EEE304)','Break','M&I (21EEE304)','EMT (21EEE301)','—','—'],
+      ['THU','EMT (21EEE301)','Machines-I (21EEE303)','M&I (21EEE304)','EDC (21EEE302)','Break','M-III (21MAT301)','Tutorial','Tutorial','—'],
+      ['FRI','M&I (21EEE304)','EMT (21EEE301)','M-III (21MAT301)','Machines-I (21EEE303)','Break','EDC (21EEE302)','—','—','—'],
+    ]
+  },
+  '7':{
+    headers:['Day','8:00–8:50','8:50–9:40','9:40–10:30','10:30–11:20','11:20–12:10','12:10–1:00','1:00–1:50','1:50–2:40'],
+    rows:[
+      ['MON','HVE (21EEE701)','FACTS (21EEE702)','PE-II','PE-III','Break','OE-II','Project →','Project →'],
+      ['TUE','PE-II','HVE (21EEE701)','FACTS (21EEE702)','PE-III','Break','Project →','Project →','—'],
+      ['WED','FACTS (21EEE702)','PE-III','HVE (21EEE701)','OE-II','Break','PE-II','—','—'],
+      ['THU','OE-II','PE-II','PE-III','HVE (21EEE701)','Break','FACTS (21EEE702)','Tutorial','—'],
+      ['FRI','HVE (21EEE701)','OE-II','PE-II','FACTS (21EEE702)','Break','PE-III','Tutorial','—'],
+    ]
+  }
+};
+
+const SUBJECT_DETAILS = {
+  '21EEE503':{
+    title:'Power Electronics',sem:5,
+    units:[
+      {n:'Unit I',name:'Power Semiconductor Devices',topics:'SCR, IGBT, MOSFET, GTO characteristics and triggering'},
+      {n:'Unit II',name:'Controlled Rectifiers',topics:'Single-phase and three-phase fully/half controlled rectifiers'},
+      {n:'Unit III',name:'Inverters',topics:'VSI, CSI, PWM techniques, multi-level inverters'},
+      {n:'Unit IV',name:'DC-DC Converters',topics:'Buck, Boost, Buck-Boost, Cuk, Flyback converters'},
+      {n:'Unit V',name:'AC Voltage Controllers',topics:'Phase angle control, cycloconverter, matrix converter'},
+    ]
+  },
+  '21EEE404':{
+    title:'Control Systems',sem:4,
+    units:[
+      {n:'Unit I',name:'System Modeling',topics:'Transfer function, block diagrams, signal flow graphs, Mason\'s formula'},
+      {n:'Unit II',name:'Time Domain Analysis',topics:'Standard test signals, P/PI/PD/PID controllers, transient response'},
+      {n:'Unit III',name:'Root Locus',topics:'Construction rules, breakaway points, stability analysis'},
+      {n:'Unit IV',name:'Frequency Domain',topics:'Bode plots, Nyquist criterion, gain and phase margins'},
+      {n:'Unit V',name:'Compensators & State Space',topics:'Lag, lead compensators, state equations, controllability'},
+    ]
+  },
+};
+
+// ─── RENDER FUNCTIONS ───
+let currentPage = 'home';
+let aiOpen = false;
+let currentNotesTab = 'notes';
+let currentSylTab = '3';
+let currentTTTab = '5';
+
+function showPage(page, btn) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  currentPage = page;
+  if(page==='courses') renderCourses();
+  if(page==='notes') renderNotes();
+  if(page==='pyq') renderPYQ();
+  if(page==='syllabus') renderSyllabus(currentSylTab);
+  if(page==='timetable') renderTimetable(currentTTTab);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderCourses() {
+  const grid = document.getElementById('sem-grid');
+  grid.innerHTML = SEMESTERS.map(s=>`
+    <div class="sem-card">
+      <div class="sem-header">
+        <div class="sem-title">Semester ${s.sem}</div>
+        <div class="sem-badge">SEM ${s.sem}</div>
+      </div>
+      <div class="sem-body">
+        ${s.subjects.map(sub=>`
+          <div class="subject-row" onclick="showSubjectDetail('${sub.code}','${sub.name}',${s.sem})">
+            <div>
+              <div class="sub-name">${sub.name}</div>
+              <div class="sub-code">${sub.code}</div>
+            </div>
+            <div class="sub-tags">
+              ${sub.tags.map(t=>`<span class="tag tag-${t.toLowerCase()}">${t==='N'?'Notes':t==='P'?'PYQ':'Lab'}</span>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function showSubjectDetail(code, name, sem) {
+  const area = document.getElementById('subject-detail-area');
+  const d = SUBJECT_DETAILS[code];
+  if(!d){
+    area.innerHTML=`
+    <div class="subject-detail active">
+      <div class="sd-header">
+        <div><div class="sd-title">${name}</div><div class="sd-code">${code} · Semester ${sem}</div></div>
+        <div class="close-btn" onclick="document.getElementById('subject-detail-area').innerHTML=''">✕</div>
+      </div>
+      <p style="color:var(--text3);font-size:13px;margin-bottom:16px">Detailed unit breakdown coming soon. Use the AI Tutor to explore this subject!</p>
+      <div class="sd-actions">
+        <button class="sd-btn sd-btn-p" onclick="toggleAI();sendQuick('Explain the subject ${name} (${code}) for SRM EEE students')">⚡ Ask AI Tutor</button>
+        <button class="sd-btn sd-btn-s" onclick="showPage('notes',document.querySelectorAll(\'.nav-link\')[2])">📝 View Notes</button>
+        <button class="sd-btn sd-btn-s" onclick="showPage('pyq',document.querySelectorAll(\'.nav-link\')[3])">📋 View PYQ</button>
+      </div>
+    </div>`;
+    area.scrollIntoView({behavior:'smooth'});return;
+  }
+  area.innerHTML=`
+  <div class="subject-detail active">
+    <div class="sd-header">
+      <div><div class="sd-title">${d.title}</div><div class="sd-code">${code} · Semester ${sem}</div></div>
+      <div class="close-btn" onclick="document.getElementById('subject-detail-area').innerHTML=''">✕</div>
+    </div>
+    <div class="unit-list">
+      ${d.units.map(u=>`
+        <div class="unit-item">
+          <div class="unit-num">${u.n}</div>
+          <div class="unit-name">${u.name}</div>
+          <div class="topics">${u.topics}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="sd-actions">
+      <button class="sd-btn sd-btn-p" onclick="toggleAI();sendQuick('I want to study ${d.title} for SRM EEE. Start with Unit I and explain with examples.')">⚡ AI Tutor for this Subject</button>
+      <button class="sd-btn sd-btn-s" onclick="showPage('notes',document.querySelectorAll('.nav-link')[2])">📝 Notes</button>
+      <button class="sd-btn sd-btn-s" onclick="showPage('pyq',document.querySelectorAll('.nav-link')[3])">📋 PYQ</button>
+    </div>
+  </div>`;
+  area.scrollIntoView({behavior:'smooth'});
+}
+
+function renderNotes() {
+  filterNotes();
+}
+
+function filterNotes() {
+  const search = document.getElementById('notes-search').value.toLowerCase();
+  const semFilter = document.getElementById('notes-filter').value;
+  const typeMap = {notes:'notes',lab:'lab',ref:'ref',formula:'formula'};
+  const type = typeMap[currentNotesTab]||'notes';
+  const filtered = NOTES_DATA.filter(n=>
+    n.type===type &&
+    (!semFilter || n.sem===parseInt(semFilter)) &&
+    (!search || n.title.toLowerCase().includes(search) || n.sub.toLowerCase().includes(search))
+  );
+  const iconMap = {notes:'📄',lab:'🔬',ref:'📚',formula:'📐'};
+  document.getElementById('notes-grid').innerHTML = filtered.length ? filtered.map(n=>`
+    <div class="resource-card">
+      <div class="rc-top">
+        <div class="rc-icon rc-icon-n">${iconMap[n.type]||'📄'}</div>
+        <div>
+          <div class="rc-title">${n.title}</div>
+          <div class="rc-meta">Sem ${n.sem} · ${n.sub}</div>
+        </div>
+      </div>
+      <div class="rc-footer">
+        <span class="rc-size">${n.pages} pages · PDF · ${n.year}</span>
+        <span class="dl-btn">⬇ Download</span>
+      </div>
+    </div>
+  `).join('') : '<p style="color:var(--text3);font-size:13px">No materials found for this filter.</p>';
+}
+
+function switchNotesTab(tab, btn) {
+  currentNotesTab = tab;
+  document.querySelectorAll('#page-notes .tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filterNotes();
+}
+
+function renderPYQ() {
+  filterPYQ();
+}
+
+function filterPYQ() {
+  const search = document.getElementById('pyq-search').value.toLowerCase();
+  const yearFilter = document.getElementById('pyq-year-filter').value;
+  const filtered = PYQ_DATA.filter(p=>
+    (!yearFilter || p.year===parseInt(yearFilter)) &&
+    (!search || p.sub.toLowerCase().includes(search) || p.code.toLowerCase().includes(search))
+  );
+  document.getElementById('pyq-grid').innerHTML = filtered.map(p=>`
+    <div class="pyq-card" onclick="openPYQModal(${p.id})">
+      <div class="pyq-year">${p.year}</div>
+      <div class="pyq-sem">${p.sem} · ${p.type}</div>
+      <div class="pyq-sub">${p.sub}</div>
+      <div style="font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;margin-top:4px">${p.code} · Sem ${p.semester}</div>
+      <div class="pyq-info">
+        <span class="pyq-tag">${p.questions.length} Questions</span>
+        <span class="pyq-tag-n pyq-tag">${p.questions.reduce((a,q)=>a+q.marks,0)} Marks</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openPYQModal(id) {
+  const p = PYQ_DATA.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('pyq-modal-content').innerHTML=`
+    <button class="modal-close" onclick="document.getElementById('pyq-modal').classList.remove('open')">✕ Close</button>
+    <div class="modal-title">${p.sub}</div>
+    <div class="modal-sub">${p.code} · Semester ${p.semester} · ${p.year} ${p.sem} · ${p.type}</div>
+    <div class="q-list">
+      ${p.questions.map((q,i)=>`
+        <div class="q-item">
+          <span class="q-marks">[${q.marks} Marks]</span>
+          <div style="font-size:11px;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:6px">Q${i+1}</div>
+          <div class="q-text">${q.q}</div>
+          <div class="q-unit">${q.unit}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:10px">
+      <button class="sd-btn sd-btn-p" onclick="toggleAI();document.getElementById('pyq-modal').classList.remove('open');sendQuick('Help me solve this PYQ for ${p.sub} ${p.year}: ${p.questions[0].q}')">⚡ Solve with AI Tutor</button>
+    </div>
+  `;
+  document.getElementById('pyq-modal').classList.add('open');
+}
+
+function closePYQModal(e) {
+  if(e.target===document.getElementById('pyq-modal')) document.getElementById('pyq-modal').classList.remove('open');
+}
+
+function renderSyllabus(sem) {
+  currentSylTab = sem;
+  const data = SYLLABUS[sem]||[];
+  document.getElementById('syllabus-content').innerHTML = data.map(subj=>`
+    <div style="margin-bottom:28px">
+      <div style="margin-bottom:14px">
+        <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700">${subj.sub}</div>
+        <div style="font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;margin-top:2px">${subj.code}</div>
+      </div>
+      ${subj.units.map(u=>`
+        <div class="syl-unit">
+          <div class="syl-unit-header" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arr').textContent=this.nextElementSibling.classList.contains('open')?'▾':'▸'">
+            <div><span class="syl-unit-num">${u.n}</span><span class="syl-unit-title">${u.title}</span></div>
+            <span class="arr" style="color:var(--text3);font-size:12px">▸</span>
+          </div>
+          <div class="syl-unit-body">
+            ${u.topics.split('·').map(t=>`<div class="syl-topic">${t.trim()}</div>`).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function switchSylTab(sem, btn) {
+  document.querySelectorAll('#page-syllabus .tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSyllabus(sem);
+}
+
+function renderTimetable(sem) {
+  currentTTTab = sem;
+  const tt = TIMETABLE[sem];
+  if(!tt){document.getElementById('tt-table').innerHTML='<tr><td>Data coming soon</td></tr>';return;}
+  document.getElementById('tt-table').innerHTML=`
+    <thead><tr>${tt.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${tt.rows.map(row=>`
+      <tr>
+        <td class="day">${row[0]}</td>
+        ${row.slice(1).map((cell,i)=>cell==='Break'?
+          `<td><span style="color:var(--text3);font-size:11px;font-style:italic">Break</span></td>`:
+          cell==='—'?`<td style="color:var(--text3)">—</td>`:
+          cell.includes('Lab')||cell.includes('→')?`<td><span class="period period-lab">${cell}</span></td>`:
+          `<td><span class="period">${cell}</span></td>`
+        ).join('')}
+      </tr>
+    `).join('')}</tbody>
+  `;
+}
+
+function switchTTTab(sem, btn) {
+  document.querySelectorAll('#page-timetable .tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTimetable(sem);
+}
+
+// ─── AI TUTOR ───
+let isTyping = false;
+
+function toggleAI() {
+  aiOpen = !aiOpen;
+  document.getElementById('ai-panel').classList.toggle('open',aiOpen);
+  document.getElementById('ai-toggle-icon').textContent = aiOpen ? '▼' : '▲';
+}
+
+function toggleAIHeader() {
+  toggleAI();
+}
+
+function aiKeydown(e) {
+  if(e.key==='Enter' && !e.shiftKey){e.preventDefault();sendAIMessage();}
+}
+
+function sendQuick(text) {
+  if(!aiOpen) toggleAI();
+  document.getElementById('ai-input').value = text;
+  sendAIMessage();
+}
+
+async function sendAIMessage() {
+  const input = document.getElementById('ai-input');
+  const text = input.value.trim();
+  if(!text || isTyping) return;
+  input.value = '';
+  isTyping = true;
+  document.getElementById('ai-send').disabled = true;
+
+  appendMessage('user', text);
+  const typingEl = appendTyping();
+
+  try {
+    const systemPrompt = `You are an expert EEE (Electrical & Electronics Engineering) tutor for students at SRM Institute of Science and Technology (SRM IST), Kattankulathur, Tamil Nadu.
+
+You specialize in the B.E. EEE curriculum (Regulation 2021). Your expertise covers:
+- Circuit Theory, Electromagnetic Theory
+- Electronic Devices & Circuits, Linear Integrated Circuits
+- Electrical Machines I & II (Transformers, DC Machines, Induction Motors, Synchronous Machines)
+- Signals & Systems, Control Systems, Digital Signal Processing
+- Power Electronics (SCR, Converters, Inverters, DC-DC Converters)
+- Power Systems I & II (Transmission Lines, Load Flow, Fault Analysis, Stability)
+- Microprocessors & Microcontrollers (8085, 8051, ARM)
+- High Voltage Engineering, FACTS, Embedded Systems, Protection & Switchgear
+
+Teaching style:
+- Use clear mathematical derivations with step-by-step explanations
+- Include practical examples relevant to real-world EEE applications
+- Reference SRM syllabus topics and typical exam question patterns
+- Use analogies to make difficult concepts intuitive
+- Provide formulas, key points, and exam tips when relevant
+- Be encouraging and motivating
+
+Keep answers focused, well-structured, and exam-oriented. Use Unicode symbols (Ω, μ, ∫, ∑, etc.) where appropriate.`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{role:'user', content: text}]
+      })
+    });
+
+    typingEl.remove();
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'I encountered an issue. Please try again.';
+    appendMessage('ai', reply);
+  } catch(err) {
+    typingEl.remove();
+    appendMessage('ai', '⚠ Connection error. Please check your network and try again.');
+  }
+
+  isTyping = false;
+  document.getElementById('ai-send').disabled = false;
+  input.focus();
+}
+
+function appendMessage(role, text) {
+  const msgs = document.getElementById('ai-messages');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role}`;
+  div.innerHTML = `
+    <div class="msg-label">${role==='ai'?'EEE Tutor':'You'}</div>
+    <div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function appendTyping() {
+  const msgs = document.getElementById('ai-messages');
+  const div = document.createElement('div');
+  div.className = 'msg msg-ai';
+  div.innerHTML = `<div class="msg-label">EEE Tutor</div><div class="ai-typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+// ─── ORB EFFECT ───
+document.addEventListener('mousemove', e => {
+  const orb = document.getElementById('orb');
+  orb.style.left = (e.clientX - 300)+'px';
+  orb.style.top = (e.clientY - 300 + window.scrollY)+'px';
+});
+
+// ─── INIT ───
+renderCourses();
+</script>
+</body>
+</html>
